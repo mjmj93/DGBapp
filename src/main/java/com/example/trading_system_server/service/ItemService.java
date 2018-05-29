@@ -1,5 +1,7 @@
 package com.example.trading_system_server.service;
 
+import com.example.trading_system_server.exception.DuplicateUserIdException;
+import com.example.trading_system_server.model.Account;
 import com.example.trading_system_server.model.Item;
 import com.example.trading_system_server.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,13 @@ public class ItemService {
 	//	storeId로 item 조회
 	public List<Item> findByStoreId(Integer storeId){
 		return itemRepository.findByStoreId(storeId);
+	}
+
+	public List<Item> findAll() {
+		return itemRepository.findAll();
+	}
+	public Item save(Item item) {
+		return itemRepository.save(item);
 	}
 
 

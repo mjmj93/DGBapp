@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -24,9 +25,9 @@ public class AccountService {
 	}
 
 
-	public Account login(Account account) {
+	public Account login(String id, String pw) {
 
-		Account testAccount = accountRepository.findByUserIdAndPassword(account.getUserId(),account.getPassword());
+		Account testAccount = accountRepository.findByUserIdAndPassword(id,pw);
 		if(null == testAccount) {
 			throw new InvalidPasswordException("User ID or password is incorrect.");
 		}
@@ -35,10 +36,14 @@ public class AccountService {
 	}
 
 
-	public Account updateBalance(Account account) {
-		Account updated = accountRepository.findByUserId(account.getUserId());
-		updated.setBlance(account.getBlance());
+	public Account updateBalance(int userId, int balance) {
+		Account updated = accountRepository.findById(userId).get();
+		updated.setBalance(balance);
 		return updated;
+	}
+
+	public List<Account> findAll() {
+		return accountRepository.findAll();
 	}
 
 

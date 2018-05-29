@@ -32,10 +32,31 @@ public class TradingController {
 
 	@Autowired
 	private PurchaseLogService purchaseLogService;
+
+
+	@GetMapping
+	private List<Item> getAllAccounts() {
+		return itemService.findAll();
+	}
+
+	@PostMapping("/addStore")
+	public Store addStore(@RequestBody Store store) {
+		return storeService.save(store);
+	}
+
+	@PostMapping("/addItem")
+	public Item addItem(@RequestBody Item item) {
+		return itemService.save(item);
+	}
+
 	@GetMapping("/store")
 	public List<Store> getAllStore() {
-		List<Store> stores = new ArrayList<>();
-		return stores;
+		return storeService.findAll();
+	}
+
+	@GetMapping("/item")
+	public List<Item> getAllItem() {
+		return itemService.findAll();
 	}
 
 	//현재 위치에서 가까운 가게들
@@ -47,8 +68,7 @@ public class TradingController {
 
 	@GetMapping("/item/{StoreId}")
 	public List<Item> getItemsOfStore(@PathVariable Integer storeId){
-		List<Item> items = itemService.findByStoreId(storeId);
-		return items;
+		return itemService.findByStoreId(storeId);
 	}
 
 //	@GetMapping("/item/photo")
@@ -61,9 +81,9 @@ public class TradingController {
 
 		return purchaseLogService.save(purchasedItemDto);
 	}
-//
-//	@GetMapping("/{purchaseLodId}")
-//	public List<PurchasedItem> GetPurchasedItems(@PathVariable Integer purchaseLogId){
-//		List<PurchasedItem> purchasedItems = purchasedItemService.findByPurchaseLogId(purchaseLogId);
-//	}
+
+	@GetMapping("/{purchaseLodId}")
+	public List<PurchasedItem> GetPurchasedItems(@PathVariable Integer purchaseLogId){
+		return purchasedItemService.findByPurchaseLogId(purchaseLogId);
+	}
 }

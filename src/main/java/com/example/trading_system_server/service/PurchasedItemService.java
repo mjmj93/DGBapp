@@ -43,11 +43,12 @@ public class PurchasedItemService {
 		return true;
 	}
 
-//
-//	@Autowired
-//	private history(Integer purchaseLogId){
-//		List<purchased> history = purchasedItemRepository.findByPurchaseLogId(purchaseLogId);
-//		return
-//	}
+	public List<PurchasedItem> findByPurchaseLogId (Integer purchaseLogId){
+		return purchasedItemRepository.findByPurchaseLogId(purchaseLogId);
+	}
 
 }
+
+
+
+

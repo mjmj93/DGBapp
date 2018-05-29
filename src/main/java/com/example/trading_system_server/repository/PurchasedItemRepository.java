@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PurchasedItemRepository extends JpaRepository<PurchasedItem,Integer> {
 
@@ -17,6 +19,9 @@ public interface PurchasedItemRepository extends JpaRepository<PurchasedItem,Int
 	                                                          @Param("itemId") Integer itemId);
 
 	PurchasedItem findByPurchaseLogIdAndItemId(Integer purchaseLogId, Integer itemId);
+	List<PurchasedItem> findByPurchaseLogId(Integer purchaseLogId);
 
-//	PurchasedItem findByPurchaseLogId()
 }
+
+
+
