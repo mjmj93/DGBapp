@@ -15,8 +15,7 @@ target/
 *.iws
 *.iml
 *.ipr
-*.mvn
-*.DS_Store
+
 
 ### NetBeans ###
 nbproject/private/ㅓ
@@ -26,4 +25,6 @@ dist/
 nbdist/
 .nb-gradle/
 
+.mvn
+.DS_Store
 rading-system-40f3c-firebase-adminsdk-5hyzw-003f7c7449.json
