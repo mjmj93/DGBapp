@@ -15,6 +15,7 @@ public class Account {
 	@GeneratedValue
 	private Integer id;
 
+	
 	private Integer sellerFlag;
 	private String userId;
 	private String email;
