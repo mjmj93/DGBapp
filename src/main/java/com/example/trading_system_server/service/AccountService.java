@@ -46,6 +46,12 @@ public class AccountService {
 		return accountRepository.findAll();
 	}
 
+	public Account findById(int id) {
+		return accountRepository.findById(id).get();
+	}
 
+	public Account findBySellerFlag(int sellerFlag){
+		return accountRepository.findBySellerFlag(sellerFlag);
+	}
 
 }

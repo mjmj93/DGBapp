@@ -1,5 +1,6 @@
 package com.example.trading_system_server.model.dto;
 
+import com.example.trading_system_server.model.Item;
 import com.example.trading_system_server.model.PurchasedItem;
 import lombok.Data;
 
@@ -7,12 +8,11 @@ import java.util.List;
 
 @Data
 public class PurchasedItemDto {
-	private Integer accountId;
-	private Integer storeId;
-	private List<PurchasedItem> items;
+	private Item item;
+	private Integer amount;
 
-	public PurchasedItemDto(Integer accountId, List<PurchasedItem> items) {
-		this.accountId = accountId;
-		this.items = items;
+	public PurchasedItemDto(Item item, Integer amount) {
+		this.amount = amount;
+		this.item = item;
 	}
 }

@@ -10,6 +10,9 @@ import com.example.trading_system_server.service.PurchaseLogService;
 import com.example.trading_system_server.service.PurchasedItemService;
 import com.example.trading_system_server.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.Path;
@@ -61,29 +64,35 @@ public class TradingController {
 
 	//현재 위치에서 가까운 가게들
 	@GetMapping("/store/{SectorId}")
-	public List<Store> getStoresOfSectore(@PathVariable Integer sectoreId){
-		List<Store> stores = storeService.findBySectorId(sectoreId);
+	public List<Store> getStoresOfSectore(@PathVariable Integer SectoreId){
+		List<Store> stores = storeService.findBySectorId(SectoreId);
 		return stores;
 	}
 
 	@GetMapping("/item/{StoreId}")
-	public List<Item> getItemsOfStore(@PathVariable Integer storeId){
-		return itemService.findByStoreId(storeId);
+	public List<Item> getItemsOfStore(@PathVariable Integer StoreId){
+		return itemService.findByStoreId(StoreId);
 	}
 
-//	@GetMapping("/item/photo")
-//	public Stream<Path> getPhotoOfItem() {
-//		return itemService.loadAll();
-//	}
-
-	@PostMapping("/purchasedItem")
-	public Integer savePurchasedItems(@RequestBody PurchasedItemDto purchasedItemDto){
-
-		return purchaseLogService.save(purchasedItemDto);
+	// 구매버튼 눌렀을때
+	@PostMapping("/purchasedItem/{accountId}/{StoreId}")
+	public Integer savePurchasedItems(@PathVariable Integer AccountId,
+	                                  @PathVariable Integer StoreId,
+	                                  @RequestBody List<PurchasedItemDto> purchasedItemDtos){
+		return purchaseLogService.buy(AccountId,StoreId,purchasedItemDtos);
 	}
 
-	@GetMapping("/{purchaseLodId}")
-	public List<PurchasedItem> GetPurchasedItems(@PathVariable Integer purchaseLogId){
-		return purchasedItemService.findByPurchaseLogId(purchaseLogId);
+	@GetMapping("/{accountId}")
+	public List<PurchasedItem> GetPurchasedItems(@PathVariable Integer accountId){
+		return purchasedItemService.findByPurchaseLogId(accountId);
+	}
+
+	@GetMapping("/files/{filename:.+}")
+	@ResponseBody
+	public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+
+		Resource file = (Resource) itemService.loadAsResource(filename);
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+				"attachment; filename=\"" + file.getFilename() + "\"").body(file);
 	}
 }
